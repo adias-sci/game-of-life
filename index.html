@@ -3,41 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Life Path Adventure</title>
+  <title>Colorful Life Adventure</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="app">
     <header class="hero">
       <div>
-        <p class="eyebrow">Life-board-game inspired</p>
-        <h1>Life Path Adventure</h1>
-        <p class="subtitle">Choose a path, earn money, face life events, and retire with the highest net worth.</p>
+        <p class="eyebrow">Colorful life-board-game style</p>
+        <h1>Colorful Life Adventure</h1>
+        <p class="subtitle">Spin, choose college or career, get paid, buy houses, grow your family, and retire rich.</p>
       </div>
       <button id="resetBtn" class="ghost">Reset</button>
     </header>
 
     <section id="homeScreen" class="panel setup">
-      <h2>Choose Mode</h2>
+      <h2>Pick a Game Mode</h2>
       <div class="mode-grid">
-        <button id="soloBtn" class="mode-card">
+        <button id="soloBtn" class="mode-card career-card">
           <strong>Single Player</strong>
-          <span>Play against computer players.</span>
+          <span>You vs computer players.</span>
         </button>
-        <button id="localBtn" class="mode-card">
+        <button id="localBtn" class="mode-card family-card">
           <strong>Pass-and-Play</strong>
-          <span>Multiple players on one device.</span>
+          <span>Everyone plays on one screen.</span>
         </button>
-        <button id="hostBtn" class="mode-card">
+        <button id="hostBtn" class="mode-card house-card">
           <strong>Host Online</strong>
           <span>Create a game code.</span>
         </button>
-        <button id="joinBtn" class="mode-card">
+        <button id="joinBtn" class="mode-card action-card">
           <strong>Join Online</strong>
           <span>Enter a game code.</span>
         </button>
       </div>
-      <p class="hint">Online mode uses your Supabase project. Run the included SQL first.</p>
+      <p class="hint">Online mode uses Supabase. Run the included SQL file once before playing online.</p>
     </section>
 
     <section id="lobbyScreen" class="panel setup hidden">
@@ -65,59 +65,71 @@
 
     <section id="gameScreen" class="game hidden">
       <aside class="panel sidebar">
-        <h2>Player Dashboard</h2>
+        <h2>Dashboard</h2>
+
+        <div class="spinner-card">
+          <div class="spinner" id="spinner">
+            <span id="spinnerValue">?</span>
+          </div>
+          <button id="spinBtn" class="primary">Spin</button>
+        </div>
+
         <div class="turn-card">
           <p class="label">Current Turn</p>
           <h3 id="turnName">—</h3>
           <p id="youName">You: —</p>
-          <p id="spinText">Spin: —</p>
           <p id="phaseText">Phase: —</p>
         </div>
 
         <div class="actions">
-          <button id="spinBtn" class="primary">Spin</button>
-          <button id="choosePathBtn">Choose Path</button>
-          <button id="buyHouseBtn">Buy / Upgrade House</button>
+          <button id="choosePathBtn">Choose College/Career</button>
+          <button id="drawCareerBtn">Draw Career Card</button>
+          <button id="buyHouseBtn">Buy House</button>
+          <button id="sellHouseBtn">Sell House</button>
+          <button id="repayLoanBtn">Repay $20k Loan</button>
           <button id="retireBtn" class="danger">Retire</button>
           <button id="endTurnBtn" class="ghost">End Turn</button>
         </div>
 
-        <h3>Your Status</h3>
+        <h3>Your Life</h3>
         <div id="myStats" class="stats"></div>
 
         <h3>Players</h3>
         <div id="scoreboard" class="scoreboard"></div>
-
-        <h3>Game Log</h3>
-        <div id="log" class="log"></div>
       </aside>
 
       <section>
         <div class="panel board-top">
           <div>
-            <h2>Life Path Board</h2>
-            <p class="hint">Spin, move, and resolve the tile. Payday, career, family, house, and surprise spaces all affect your final score.</p>
+            <h2>Life Road</h2>
+            <p class="hint">Follow the bright road. Special spaces trigger careers, payday, family, houses, action cards, taxes, and retirement.</p>
           </div>
           <span id="turnBadge" class="pill">Waiting</span>
         </div>
+
         <div class="board-wrap">
           <div id="board" class="board"></div>
+        </div>
+
+        <div class="panel log-panel">
+          <h3>Life Story Log</h3>
+          <div id="log" class="log"></div>
         </div>
       </section>
 
       <aside class="panel cards-panel">
-        <h2>Cards & Rules</h2>
-        <div class="rule-card">
-          <h3>Goal</h3>
-          <p>Retire with the highest net worth: cash + house value + family bonus − loans.</p>
+        <h2>Current Cards</h2>
+        <div id="careerCard" class="big-card career-card">
+          <p class="label">Career</p>
+          <h3>No career yet</h3>
+        </div>
+        <div id="houseCard" class="big-card house-card">
+          <p class="label">House</p>
+          <h3>No house yet</h3>
         </div>
         <div class="rule-card">
-          <h3>Path Choice</h3>
-          <p><strong>College:</strong> start with loans, better careers. <strong>Career:</strong> start earning faster.</p>
-        </div>
-        <div class="rule-card">
-          <h3>Retirement</h3>
-          <p>You can retire after reaching the retirement zone. The game ends when everyone retires.</p>
+          <h3>How scoring works</h3>
+          <p>Final score = cash + house sell value + family bonus + life tiles − loans.</p>
         </div>
       </aside>
     </section>

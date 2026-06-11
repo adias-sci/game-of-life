@@ -1,39 +1,35 @@
-# Life Path Adventure
+# Colorful Life Adventure
 
-A browser-based Life-board-game-inspired game.
+A bright, Life-board-game-style browser game.
 
-## Features
+## What changed
 
-- Single-player with bots
-- Pass-and-play
-- Online multiplayer with room codes using Supabase
-- Career vs college path
-- Salaries and payday
-- Houses and upgrades
-- Marriage and kids
-- Life event spaces
-- Retirement and final net-worth scoring
+- Brighter colorful board
+- Winding road instead of a grid
+- Spinner 1–10
+- College or Career start
+- Career cards with salary and tax amount
+- Payday spaces
+- Action cards
+- Family spaces: marriage, kids, pets
+- House buying/selling
+- Taxes
+- Life Tiles
+- Retirement and final scoring
+- Single-player, pass-and-play, and online room codes
 
-## Setup
+## Setup for online play
 
-1. In Supabase, open SQL Editor.
+1. Open Supabase → SQL Editor.
 2. Paste `life-supabase-setup.sql`.
 3. Click Run.
-4. Upload these files to GitHub:
-   - index.html
-   - style.css
-   - script.js
-   - supabase-config.js
-   - life-supabase-setup.sql
-5. Deploy the GitHub repo on Vercel.
-
-## How people play
-
-Send players your Vercel URL. The host clicks Host Online and shares the game code. Other players click Join Online and enter that code.
+4. Upload files to GitHub.
+5. Deploy on Vercel.
 
 ## Google Sites
 
-Google Sites → Insert → Embed → By URL → paste your Vercel URL.
+Embed the Vercel URL:
+Google Sites → Insert → Embed → By URL.
 
 ## Note
 

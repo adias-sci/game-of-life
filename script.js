@@ -2,75 +2,86 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const supabase = createClient(window.LIFE_SUPABASE_URL, window.LIFE_SUPABASE_KEY);
 
-const colors = ["#76d6ff", "#f0c96a", "#f49ac2", "#76d68c", "#ae89ff", "#ff9b7a"];
+const colors = ["#ff6b6b", "#4dabf7", "#69db7c", "#ffd43b", "#b388ff", "#ff922b"];
 
-const careersCollege = [
-  { name: "Doctor", salary: 120000 },
-  { name: "Engineer", salary: 95000 },
-  { name: "Lawyer", salary: 105000 },
-  { name: "Professor", salary: 85000 },
-  { name: "Game Designer", salary: 90000 }
+const collegeCareers = [
+  { name: "Doctor", salary: 130000, tax: 45000 },
+  { name: "Lawyer", salary: 115000, tax: 40000 },
+  { name: "Engineer", salary: 100000, tax: 35000 },
+  { name: "Scientist", salary: 95000, tax: 32000 },
+  { name: "Professor", salary: 85000, tax: 28000 }
 ];
 
-const careersFast = [
-  { name: "Chef", salary: 55000 },
-  { name: "Mechanic", salary: 60000 },
-  { name: "Artist", salary: 50000 },
-  { name: "Sales Manager", salary: 70000 },
-  { name: "Entrepreneur", salary: 75000 }
+const careerCareers = [
+  { name: "Chef", salary: 60000, tax: 18000 },
+  { name: "Artist", salary: 55000, tax: 16000 },
+  { name: "Mechanic", salary: 65000, tax: 19000 },
+  { name: "Influencer", salary: 70000, tax: 21000 },
+  { name: "Entrepreneur", salary: 80000, tax: 24000 }
 ];
 
 const houses = [
-  { name: "Starter Condo", cost: 120000, value: 140000 },
-  { name: "Townhouse", cost: 220000, value: 260000 },
-  { name: "Family Home", cost: 350000, value: 420000 },
-  { name: "Dream Estate", cost: 650000, value: 760000 }
+  { name: "Cozy Cottage", price: 140000, sell: 180000 },
+  { name: "City Condo", price: 220000, sell: 260000 },
+  { name: "Family Home", price: 360000, sell: 430000 },
+  { name: "Beach House", price: 520000, sell: 650000 },
+  { name: "Dream Mansion", price: 800000, sell: 1000000 }
 ];
 
-const lifeEvents = [
-  { text: "Won a community award. Collect $25,000.", cash: 25000 },
-  { text: "Car repair. Pay $15,000.", cash: -15000 },
-  { text: "Side hustle paid off. Collect $40,000.", cash: 40000 },
-  { text: "Vacation memories. Pay $20,000.", cash: -20000 },
-  { text: "Stock bonus. Collect $50,000.", cash: 50000 },
-  { text: "Medical bill. Pay $25,000.", cash: -25000 },
-  { text: "Charity gala. Pay $10,000 and gain reputation.", cash: -10000, bonus: 20000 },
-  { text: "Inheritance surprise. Collect $60,000.", cash: 60000 }
+const actionCards = [
+  { text: "Win a TV game show. Collect $80,000.", cash: 80000 },
+  { text: "Start a charity fundraiser. Pay $20,000 but gain a Life Tile.", cash: -20000, life: 1 },
+  { text: "Car breaks down. Pay $30,000.", cash: -30000 },
+  { text: "Sell an app idea. Collect $120,000.", cash: 120000 },
+  { text: "Vacation around the world. Pay $40,000 and gain a Life Tile.", cash: -40000, life: 1 },
+  { text: "Lawsuit settlement. Collect $60,000.", cash: 60000 },
+  { text: "Home repairs. Pay $25,000.", cash: -25000 },
+  { text: "Help a friend move. Collect a Life Tile.", life: 1 },
+  { text: "Stock market jump. Collect $100,000.", cash: 100000 },
+  { text: "Go back to school. Pay $50,000 and increase salary by $20,000.", cash: -50000, raise: 20000 }
 ];
 
-const boardPath = [
-  { r:7,c:0,type:"start",label:"Start" },
-  { r:7,c:1,type:"choice",label:"Path Choice" },
-  { r:7,c:2,type:"event",label:"Life Event" },
-  { r:7,c:3,type:"payday",label:"Payday" },
-  { r:7,c:4,type:"career",label:"Career" },
-  { r:7,c:5,type:"event",label:"Life Event" },
-  { r:7,c:6,type:"house",label:"House" },
-  { r:7,c:7,type:"payday",label:"Payday" },
-  { r:7,c:8,type:"family",label:"Family" },
-  { r:7,c:9,type:"event",label:"Life Event" },
-  { r:6,c:9,type:"payday",label:"Payday" },
-  { r:5,c:9,type:"choice",label:"Risk Choice" },
-  { r:4,c:9,type:"event",label:"Life Event" },
-  { r:3,c:9,type:"payday",label:"Payday" },
-  { r:2,c:9,type:"family",label:"Family" },
-  { r:1,c:9,type:"house",label:"House" },
-  { r:0,c:9,type:"event",label:"Life Event" },
-  { r:0,c:8,type:"payday",label:"Payday" },
-  { r:0,c:7,type:"career",label:"Career Boost" },
-  { r:0,c:6,type:"event",label:"Life Event" },
-  { r:0,c:5,type:"family",label:"Family" },
-  { r:0,c:4,type:"payday",label:"Payday" },
-  { r:0,c:3,type:"house",label:"House" },
-  { r:0,c:2,type:"event",label:"Life Event" },
-  { r:0,c:1,type:"payday",label:"Payday" },
-  { r:0,c:0,type:"choice",label:"Midlife Choice" },
-  { r:1,c:0,type:"event",label:"Life Event" },
-  { r:2,c:0,type:"payday",label:"Payday" },
-  { r:3,c:0,type:"family",label:"Family" },
-  { r:4,c:0,type:"event",label:"Life Event" },
-  { r:5,c:0,type:"payday",label:"Payday" },
-  { r:6,c:0,type:"retire",label:"Retirement Zone" }
+const path = [
+  {x:40,y:620,type:"start",label:"START"},
+  {x:150,y:620,type:"college",label:"COLLEGE or CAREER"},
+  {x:260,y:620,type:"action",label:"ACTION"},
+  {x:370,y:620,type:"payday",label:"PAYDAY"},
+  {x:480,y:620,type:"career",label:"CAREER"},
+  {x:590,y:620,type:"life",label:"LIFE TILE"},
+  {x:700,y:620,type:"house",label:"BUY HOUSE"},
+  {x:810,y:620,type:"payday",label:"PAYDAY"},
+  {x:810,y:500,type:"family",label:"GET MARRIED"},
+  {x:700,y:500,type:"action",label:"ACTION"},
+  {x:590,y:500,type:"tax",label:"TAXES"},
+  {x:480,y:500,type:"payday",label:"PAYDAY"},
+  {x:370,y:500,type:"family",label:"BABY"},
+  {x:260,y:500,type:"house",label:"HOUSE"},
+  {x:150,y:500,type:"action",label:"ACTION"},
+  {x:40,y:500,type:"life",label:"LIFE TILE"},
+  {x:40,y:380,type:"payday",label:"PAYDAY"},
+  {x:150,y:380,type:"career",label:"CAREER CHANGE"},
+  {x:260,y:380,type:"family",label:"TWINS?"},
+  {x:370,y:380,type:"action",label:"ACTION"},
+  {x:480,y:380,type:"payday",label:"PAYDAY"},
+  {x:590,y:380,type:"house",label:"HOUSE"},
+  {x:700,y:380,type:"tax",label:"TAXES"},
+  {x:810,y:380,type:"life",label:"LIFE TILE"},
+  {x:810,y:260,type:"action",label:"ACTION"},
+  {x:700,y:260,type:"payday",label:"PAYDAY"},
+  {x:590,y:260,type:"family",label:"ADOPT PET"},
+  {x:480,y:260,type:"career",label:"RAISE"},
+  {x:370,y:260,type:"action",label:"ACTION"},
+  {x:260,y:260,type:"payday",label:"PAYDAY"},
+  {x:150,y:260,type:"life",label:"LIFE TILE"},
+  {x:40,y:260,type:"house",label:"HOUSE"},
+  {x:40,y:140,type:"payday",label:"PAYDAY"},
+  {x:150,y:140,type:"action",label:"ACTION"},
+  {x:260,y:140,type:"tax",label:"TAXES"},
+  {x:370,y:140,type:"family",label:"FAMILY"},
+  {x:480,y:140,type:"payday",label:"PAYDAY"},
+  {x:590,y:140,type:"life",label:"LIFE TILE"},
+  {x:700,y:140,type:"action",label:"ACTION"},
+  {x:810,y:140,type:"retire",label:"RETIRE"}
 ];
 
 let state = freshState();
@@ -92,523 +103,213 @@ $("lobbyAction").onclick = lobbyAction;
 $("startBtn").onclick = startGame;
 $("copyBtn").onclick = () => navigator.clipboard?.writeText(gameCode || "");
 $("resetBtn").onclick = () => location.reload();
-
 $("spinBtn").onclick = spin;
 $("choosePathBtn").onclick = choosePath;
+$("drawCareerBtn").onclick = drawCareer;
 $("buyHouseBtn").onclick = buyHouse;
+$("sellHouseBtn").onclick = sellHouse;
+$("repayLoanBtn").onclick = repayLoan;
 $("retireBtn").onclick = retire;
 $("endTurnBtn").onclick = () => endTurn();
 
-function freshState() {
-  return {
-    status: "lobby",
-    players: [],
-    current: 0,
-    spin: 0,
-    log: [],
-    winnerId: null
-  };
-}
+function freshState(){return{status:"lobby",players:[],current:0,spin:0,log:[],winnerId:null};}
 
-function openLobby(kind) {
+function openLobby(kind){
   mode = kind === "join" ? "online" : kind;
   isHost = kind !== "join" && kind !== "online";
-  gameCode = null;
-  myId = null;
-  state = freshState();
-  $("homeScreen").classList.add("hidden");
-  $("gameScreen").classList.add("hidden");
-  $("lobbyScreen").classList.remove("hidden");
-  $("codeBox").classList.add("hidden");
-  $("joinCode").classList.toggle("hidden", kind !== "join");
-  $("startBtn").classList.add("hidden");
-  $("playersList").innerHTML = "";
-  $("statusText").textContent = "";
-  $("lobbyAction").classList.remove("hidden");
-  $("playerName").value = "";
-  $("lobbyTitle").textContent = kind === "solo" ? "Single Player" : kind === "local" ? "Pass-and-Play Lobby" : "Join Online Game";
-  $("lobbyHelp").textContent = kind === "solo" ? "Enter your name. Computer players will join." : kind === "local" ? "Add 2–6 players." : "Enter the game code and your name.";
+  gameCode = null; myId = null; state = freshState();
+  $("homeScreen").classList.add("hidden"); $("gameScreen").classList.add("hidden"); $("lobbyScreen").classList.remove("hidden");
+  $("codeBox").classList.add("hidden"); $("joinCode").classList.toggle("hidden", kind !== "join");
+  $("startBtn").classList.add("hidden"); $("playersList").innerHTML=""; $("statusText").textContent=""; $("lobbyAction").classList.remove("hidden"); $("playerName").value="";
+  $("lobbyTitle").textContent = kind==="solo" ? "Single Player" : kind==="local" ? "Pass-and-Play Lobby" : "Join Online Game";
+  $("lobbyHelp").textContent = kind==="solo" ? "Enter your name. Computer players will join." : kind==="local" ? "Add 2–6 players." : "Enter the game code and your name.";
 }
 
-function showHome() {
-  stopSync();
-  $("homeScreen").classList.remove("hidden");
-  $("lobbyScreen").classList.add("hidden");
-  $("gameScreen").classList.add("hidden");
-}
+function showHome(){ stopSync(); $("homeScreen").classList.remove("hidden"); $("lobbyScreen").classList.add("hidden"); $("gameScreen").classList.add("hidden"); }
 
-async function hostOnline() {
-  mode = "online";
-  isHost = true;
-  myId = makeId();
-  gameCode = makeCode();
-  state = freshState();
-
-  const { error } = await supabase.from("life_games").insert({ code: gameCode, state });
-  if (error) return msg("Supabase Error", error.message + " — Make sure you ran life-supabase-setup.sql.");
-
+async function hostOnline(){
+  mode="online"; isHost=true; myId=makeId(); gameCode=makeCode(); state=freshState();
+  const {error}=await supabase.from("life_games").insert({code:gameCode,state});
+  if(error) return msg("Supabase Error", error.message + " — Run life-supabase-setup.sql first.");
   subscribe(gameCode);
-  $("homeScreen").classList.add("hidden");
-  $("lobbyScreen").classList.remove("hidden");
-  $("lobbyTitle").textContent = "Host Online Game";
-  $("lobbyHelp").textContent = "Share the code. Add yourself, then start.";
-  $("codeBox").classList.remove("hidden");
-  $("codeText").textContent = gameCode;
-  $("joinCode").classList.add("hidden");
-  $("startBtn").classList.remove("hidden");
+  $("homeScreen").classList.add("hidden"); $("lobbyScreen").classList.remove("hidden");
+  $("lobbyTitle").textContent="Host Online Game"; $("lobbyHelp").textContent="Share the code. Add yourself, then start.";
+  $("codeBox").classList.remove("hidden"); $("codeText").textContent=gameCode; $("joinCode").classList.add("hidden"); $("startBtn").classList.remove("hidden");
 }
 
-async function lobbyAction() {
-  const name = $("playerName").value.trim();
-  if (!name) return msg("Name needed", "Enter a player name.");
-
-  if (mode === "solo") {
-    state = freshState();
-    addPlayer(name, "human");
-    ["Bot Bailey", "Bot Riley", "Bot Morgan"].forEach(n => addPlayer(n, "bot"));
-    myId = state.players[0].id;
-    isHost = true;
-    return startGame();
+async function lobbyAction(){
+  const name=$("playerName").value.trim(); if(!name) return msg("Name needed","Enter a player name.");
+  if(mode==="solo"){
+    state=freshState(); addPlayer(name,"human"); ["Bot Sky","Bot Sunny","Bot Rose"].forEach(n=>addPlayer(n,"bot"));
+    myId=state.players[0].id; isHost=true; return startGame();
   }
-
-  if (mode === "local") {
-    if (state.players.length >= 6) return msg("Full", "Maximum 6 players.");
-    addPlayer(name, "human");
-    $("playerName").value = "";
-    renderLobby();
-    $("startBtn").classList.toggle("hidden", state.players.length < 2);
-    return;
+  if(mode==="local"){
+    if(state.players.length>=6) return msg("Full","Maximum 6 players.");
+    addPlayer(name,"human"); $("playerName").value=""; renderLobby(); $("startBtn").classList.toggle("hidden",state.players.length<2); return;
   }
-
-  if (mode === "online" && !isHost) {
-    const code = $("joinCode").value.trim().toUpperCase();
-    const { data, error } = await supabase.from("life_games").select("state").eq("code", code).single();
-    if (error || !data) return msg("Game not found", "Check the code and try again.");
-    state = data.state;
-    gameCode = code;
-    myId = makeId();
-
-    if (state.status !== "lobby") return msg("Already started", "That game has already started.");
-    if (state.players.length >= 6) return msg("Full", "That game already has 6 players.");
-
-    state.players.push(makePlayer(name, "human", state.players.length, myId));
-    await saveState();
-    subscribe(code);
-
-    $("codeBox").classList.remove("hidden");
-    $("codeText").textContent = code;
-    $("joinCode").classList.add("hidden");
-    $("lobbyAction").classList.add("hidden");
-    $("statusText").textContent = "Joined. Waiting for host.";
-    renderLobby();
+  if(mode==="online" && !isHost){
+    const code=$("joinCode").value.trim().toUpperCase();
+    const {data,error}=await supabase.from("life_games").select("state").eq("code",code).single();
+    if(error||!data) return msg("Game not found","Check the code and try again.");
+    state=data.state; gameCode=code; myId=makeId();
+    if(state.status!=="lobby") return msg("Already started","That game has already started.");
+    if(state.players.length>=6) return msg("Full","That game already has 6 players.");
+    state.players.push(makePlayer(name,"human",state.players.length,myId));
+    await saveState(); subscribe(code);
+    $("codeBox").classList.remove("hidden"); $("codeText").textContent=code; $("joinCode").classList.add("hidden"); $("lobbyAction").classList.add("hidden");
+    $("statusText").textContent="Joined. Waiting for host."; renderLobby(); return;
   }
-
-  if (mode === "online" && isHost) {
-    if (state.players.some(p => p.id === myId)) return;
-    state.players.push(makePlayer(name, "human", state.players.length, myId));
-    await saveState();
-    $("playerName").value = "";
-    renderLobby();
+  if(mode==="online" && isHost){
+    if(state.players.some(p=>p.id===myId)) return;
+    state.players.push(makePlayer(name,"human",state.players.length,myId)); await saveState(); $("playerName").value=""; renderLobby();
   }
 }
 
-function addPlayer(name, kind) {
-  state.players.push(makePlayer(name, kind, state.players.length));
+function addPlayer(name,kind){state.players.push(makePlayer(name,kind,state.players.length));}
+function makePlayer(name,kind,i,id=makeId()){
+  return {id,name,kind,color:colors[i%colors.length],pos:0,cash:200000,loans:0,career:null,salary:0,tax:0,house:null,married:false,kids:0,pets:0,lifeTiles:0,pathChosen:false,retired:false,moved:false};
 }
 
-function makePlayer(name, kind, i, id = makeId()) {
-  return {
-    id,
-    name,
-    kind,
-    color: colors[i % colors.length],
-    pos: 0,
-    cash: 200000,
-    loans: 0,
-    career: null,
-    salary: 0,
-    house: null,
-    married: false,
-    kids: 0,
-    bonus: 0,
-    pathChosen: false,
-    retired: false,
-    movedThisTurn: false
-  };
+async function startGame(){
+  if(state.players.length<2) return msg("Need players","Add at least 2 players.");
+  state.status="playing"; state.log=["Welcome to the road of life! First choose College or Career."];
+  await changed(); enterGame();
 }
 
-async function startGame() {
-  if (state.players.length < 2) return msg("Need players", "Add at least 2 players.");
-  state.status = "playing";
-  state.log = ["The adventure begins. Choose college or career, then spin to move."];
-  await changed();
-  enterGame();
+function enterGame(){ $("homeScreen").classList.add("hidden"); $("lobbyScreen").classList.add("hidden"); $("gameScreen").classList.remove("hidden"); renderAll(); setTimeout(botTurn,600); }
+
+function renderLobby(){
+  $("playersList").innerHTML="";
+  state.players.forEach((p,i)=>{const s=document.createElement("span");s.className="chip";s.innerHTML=`<span class="token" style="background:${p.color}">${escapeHtml(p.name[0])}</span>${i+1}. ${escapeHtml(p.name)}${p.kind==="bot"?" / Bot":""}`;$("playersList").appendChild(s);});
 }
 
-function enterGame() {
-  $("homeScreen").classList.add("hidden");
-  $("lobbyScreen").classList.add("hidden");
-  $("gameScreen").classList.remove("hidden");
-  renderAll();
-  setTimeout(botTurn, 600);
+function renderAll(){ if(state.status==="lobby") return renderLobby(); if(state.status==="playing"||state.status==="ended"){ if($("gameScreen").classList.contains("hidden")) enterGame(); renderSide(); renderBoard(); } }
+
+function renderSide(){
+  const p=cur(), me=viewer();
+  $("turnName").textContent=p?.name||"—"; $("youName").textContent=me?`You: ${me.name}`:"You: spectator"; $("phaseText").textContent=state.status==="ended"?"Game Over":p?.retired?"Retired":p?.pathChosen?"Spin and move":"Choose path";
+  $("spinnerValue").textContent=state.spin||"?";
+  const mine=isMyTurn();
+  $("spinBtn").disabled=!mine||state.status!=="playing"||!p?.pathChosen||p.moved||p.retired;
+  $("choosePathBtn").disabled=!mine||state.status!=="playing"||p?.pathChosen||p?.retired;
+  $("drawCareerBtn").disabled=!mine||state.status!=="playing"||!p?.pathChosen||p?.retired;
+  $("buyHouseBtn").disabled=!mine||state.status!=="playing"||p?.retired;
+  $("sellHouseBtn").disabled=!mine||state.status!=="playing"||!p?.house||p?.retired;
+  $("repayLoanBtn").disabled=!mine||state.status!=="playing"||p?.loans<=0;
+  $("retireBtn").disabled=!mine||state.status!=="playing"||p?.pos<path.length-1||p?.retired;
+  $("endTurnBtn").disabled=!mine||state.status!=="playing";
+  $("turnBadge").textContent=state.status==="ended"?"Game Over":mine?"Your Turn":"Waiting";
+  renderStats(me||p); renderScoreboard(); renderCards(me||p);
+  $("log").innerHTML=[...state.log].reverse().slice(0,90).map(x=>`<p>${escapeHtml(x)}</p>`).join("");
 }
 
-function renderLobby() {
-  $("playersList").innerHTML = "";
-  state.players.forEach((p, i) => {
-    const s = document.createElement("span");
-    s.className = "chip";
-    s.innerHTML = `<span class="token" style="background:${p.color}">${escapeHtml(p.name[0])}</span>${i + 1}. ${escapeHtml(p.name)}${p.kind === "bot" ? " / Bot" : ""}`;
-    $("playersList").appendChild(s);
-  });
-}
-
-function renderAll() {
-  if (state.status === "lobby") return renderLobby();
-  if (state.status === "playing" || state.status === "ended") {
-    if ($("gameScreen").classList.contains("hidden")) enterGame();
-    renderSide();
-    renderBoard();
-  }
-}
-
-function renderSide() {
-  const p = cur();
-  const me = viewer();
-  $("turnName").textContent = p?.name || "—";
-  $("youName").textContent = me ? `You: ${me.name}` : "You: spectator";
-  $("spinText").textContent = state.spin ? `Spin: ${state.spin}` : "Spin: —";
-  $("phaseText").textContent = state.status === "ended" ? "Game Over" : p?.retired ? "Retired" : p?.pathChosen ? "Moving" : "Choose path";
-
-  const mine = isMyTurn();
-  $("spinBtn").disabled = !mine || state.status !== "playing" || !p?.pathChosen || p.movedThisTurn || p.retired;
-  $("choosePathBtn").disabled = !mine || state.status !== "playing" || p?.pathChosen || p?.retired;
-  $("buyHouseBtn").disabled = !mine || state.status !== "playing" || p?.retired;
-  $("retireBtn").disabled = !mine || state.status !== "playing" || p?.pos < boardPath.length - 1 || p?.retired;
-  $("endTurnBtn").disabled = !mine || state.status !== "playing";
-
-  $("turnBadge").textContent = state.status === "ended" ? "Game Over" : mine ? "Your Turn" : "Waiting";
-
-  renderStats(me || p);
-  renderScoreboard();
-
-  $("log").innerHTML = [...state.log].reverse().slice(0, 80).map(x => `<p>${escapeHtml(x)}</p>`).join("");
-}
-
-function renderStats(p) {
-  if (!p) return;
-  $("myStats").innerHTML = `
+function renderStats(p){
+  if(!p)return;
+  $("myStats").innerHTML=`
     <div class="stat"><strong>Cash:</strong> <span class="money">${money(p.cash)}</span></div>
     <div class="stat"><strong>Loans:</strong> <span class="debt">${money(p.loans)}</span></div>
-    <div class="stat"><strong>Career:</strong> ${p.career || "None"} ${p.salary ? `(${money(p.salary)})` : ""}</div>
-    <div class="stat"><strong>House:</strong> ${p.house ? `${p.house.name} / value ${money(p.house.value)}` : "None"}</div>
-    <div class="stat"><strong>Family:</strong> ${p.married ? "Married" : "Single"}, ${p.kids} kid${p.kids === 1 ? "" : "s"}</div>
-    <div class="stat"><strong>Net Worth:</strong> <span class="money">${money(netWorth(p))}</span></div>
-  `;
+    <div class="stat"><strong>Family:</strong> ${p.married?"Married":"Single"}, ${p.kids} kid${p.kids===1?"":"s"}, ${p.pets} pet${p.pets===1?"":"s"}</div>
+    <div class="stat"><strong>Life Tiles:</strong> ${p.lifeTiles}</div>
+    <div class="stat"><strong>Net Worth:</strong> <span class="money">${money(netWorth(p))}</span></div>`;
 }
 
-function renderScoreboard() {
-  $("scoreboard").innerHTML = [...state.players]
-    .sort((a,b) => netWorth(b) - netWorth(a))
-    .map(p => `
-      <div class="player-row">
-        <strong><span class="token" style="background:${p.color}">${escapeHtml(p.name[0])}</span> ${escapeHtml(p.name)} ${p.retired ? "🏁" : ""}</strong>
-        <span>Net worth: <span class="money">${money(netWorth(p))}</span></span>
-        <span class="hint">${p.career || "No career"} • ${p.house?.name || "No house"}</span>
-      </div>
-    `).join("");
+function renderCards(p){
+  $("careerCard").innerHTML=`<p class="label">Career</p><h3>${p?.career||"No career yet"}</h3><p>${p?.salary?`Salary: ${money(p.salary)}<br>Tax: ${money(p.tax)}`:"Choose a path first."}</p>`;
+  $("houseCard").innerHTML=`<p class="label">House</p><h3>${p?.house?.name||"No house yet"}</h3><p>${p?.house?`Cost: ${money(p.house.price)}<br>Sell value: ${money(p.house.sell)}`:"Land on a house space or buy one."}</p>`;
 }
 
-function renderBoard() {
-  $("board").innerHTML = "";
-  for (let r = 0; r < 8; r++) {
-    for (let c = 0; c < 10; c++) {
-      const idx = boardPath.findIndex(t => t.r === r && t.c === c);
-      const tile = document.createElement("div");
-      if (idx < 0) {
-        tile.className = "tile empty";
-        $("board").appendChild(tile);
-        continue;
-      }
-      const data = boardPath[idx];
-      tile.className = `tile ${data.type}`;
-      if (idx === cur()?.pos) tile.classList.add("current");
-      tile.innerHTML = `<strong>${idx}</strong><br>${escapeHtml(data.label)}`;
+function renderScoreboard(){
+  $("scoreboard").innerHTML=[...state.players].sort((a,b)=>netWorth(b)-netWorth(a)).map(p=>`
+    <div class="player-row"><strong><span class="token" style="background:${p.color}">${escapeHtml(p.name[0])}</span> ${escapeHtml(p.name)} ${p.retired?"🏁":""}</strong>
+    <span>Net worth: <span class="money">${money(netWorth(p))}</span></span><span class="hint">${p.career||"No career"} • ${p.house?.name||"No house"}</span></div>`).join("");
+}
 
-      const here = state.players.filter(p => p.pos === idx);
-      if (here.length) {
-        const holder = document.createElement("div");
-        holder.className = "tokens";
-        here.forEach(p => {
-          const token = document.createElement("span");
-          token.className = "token";
-          token.style.background = p.color;
-          token.textContent = p.name[0];
-          token.title = p.name;
-          token.style.opacity = p.retired ? .45 : 1;
-          holder.appendChild(token);
-        });
-        tile.appendChild(holder);
-      }
-
-      $("board").appendChild(tile);
-    }
+function renderBoard(){
+  const board=$("board"); board.innerHTML="";
+  for(let i=0;i<path.length-1;i++){
+    const a=path[i], b=path[i+1];
+    const dx=b.x-a.x, dy=b.y-a.y, len=Math.sqrt(dx*dx+dy*dy), ang=Math.atan2(dy,dx)*180/Math.PI;
+    const road=document.createElement("div"); road.className="road"; road.style.left=(a.x+46)+"px"; road.style.top=(a.y+32)+"px"; road.style.width=len+"px"; road.style.transform=`rotate(${ang}deg)`; board.appendChild(road);
   }
-}
-
-async function choosePath() {
-  const p = cur();
-  const path = await choose("Choose Your Path", [
-    { value: "college", label: "College: take $80,000 loans, draw a better career" },
-    { value: "career", label: "Career: start earning immediately" }
-  ]);
-  if (!path) return;
-
-  if (path === "college") {
-    p.loans += 80000;
-    const career = pick(careersCollege);
-    p.career = career.name;
-    p.salary = career.salary;
-    p.cash += 20000;
-    state.log.push(`${p.name} chose College, took $80,000 in loans, and became a ${career.name}.`);
-  } else {
-    const career = pick(careersFast);
-    p.career = career.name;
-    p.salary = career.salary;
-    state.log.push(`${p.name} chose Career and became a ${career.name}.`);
-  }
-  p.pathChosen = true;
-  await changed();
-}
-
-async function spin() {
-  const p = cur();
-  const spin = 1 + Math.floor(Math.random() * 6);
-  state.spin = spin;
-  const old = p.pos;
-  p.pos = Math.min(boardPath.length - 1, p.pos + spin);
-  p.movedThisTurn = true;
-  state.log.push(`${p.name} spun ${spin} and moved from ${old} to ${p.pos}.`);
-  resolveTile(p, boardPath[p.pos]);
-  checkEnd();
-  await changed();
-}
-
-function resolveTile(p, tile) {
-  if (tile.type === "payday") {
-    p.cash += p.salary;
-    state.log.push(`Payday! ${p.name} collected ${money(p.salary)}.`);
-  }
-
-  if (tile.type === "career") {
-    p.cash += 30000;
-    p.salary += 10000;
-    state.log.push(`${p.name} got a career boost: +$10,000 salary and $30,000 bonus.`);
-  }
-
-  if (tile.type === "event") {
-    const ev = pick(lifeEvents);
-    p.cash += ev.cash || 0;
-    p.bonus += ev.bonus || 0;
-    state.log.push(`${p.name}: ${ev.text}`);
-  }
-
-  if (tile.type === "family") {
-    const roll = Math.random();
-    if (!p.married && roll < .45) {
-      p.married = true;
-      p.cash -= 20000;
-      state.log.push(`${p.name} got married. Wedding costs $20,000.`);
-    } else {
-      const kids = Math.random() < .7 ? 1 : 2;
-      p.kids += kids;
-      p.cash -= kids * 10000;
-      state.log.push(`${p.name} welcomed ${kids} kid${kids === 1 ? "" : "s"}. Pay ${money(kids * 10000)}.`);
-    }
-  }
-
-  if (tile.type === "house") {
-    state.log.push(`${p.name} landed on a house space. They may buy or upgrade a house.`);
-  }
-
-  if (tile.type === "choice") {
-    const amount = Math.random() < .5 ? 40000 : -30000;
-    p.cash += amount;
-    state.log.push(amount > 0 ? `${p.name} made a smart choice and earned ${money(amount)}.` : `${p.name} took a risky choice and paid ${money(Math.abs(amount))}.`);
-  }
-
-  if (tile.type === "retire") {
-    state.log.push(`${p.name} reached the retirement zone.`);
-  }
-}
-
-async function buyHouse() {
-  const p = cur();
-  const currentIndex = p.house ? houses.findIndex(h => h.name === p.house.name) : -1;
-  const options = houses.slice(currentIndex + 1);
-  if (!options.length) return msg("No Upgrade", "You already own the best house.");
-
-  const choice = await choose("Buy / Upgrade House", options.map((h, i) => ({
-    value: String(i),
-    label: `${h.name}: cost ${money(h.cost)}, value ${money(h.value)}`
-  })));
-  if (choice === null) return;
-
-  const house = options[Number(choice)];
-  p.cash -= house.cost;
-  p.house = house;
-  state.log.push(`${p.name} bought ${house.name} for ${money(house.cost)}.`);
-  await changed();
-}
-
-async function retire() {
-  const p = cur();
-  p.retired = true;
-  p.cash += 100000;
-  state.log.push(`${p.name} retired and received a $100,000 retirement bonus.`);
-  checkEnd();
-  await changed();
-  if (state.status !== "ended") endTurn(true);
-}
-
-async function endTurn(force = false) {
-  if (!force && !isMyTurn()) return;
-  cur().movedThisTurn = false;
-  state.spin = 0;
-
-  if (state.players.every(p => p.retired)) {
-    checkEnd();
-    await changed();
-    return;
-  }
-
-  do {
-    state.current = (state.current + 1) % state.players.length;
-  } while (cur().retired);
-
-  state.log.push(`It is now ${cur().name}'s turn.`);
-  await changed();
-  setTimeout(botTurn, 600);
-}
-
-async function botTurn() {
-  if (mode !== "solo" || cur()?.kind !== "bot" || state.status !== "playing") return;
-  setTimeout(async () => {
-    const p = cur();
-    if (!p.pathChosen) {
-      const college = Math.random() > .45;
-      if (college) {
-        p.loans += 80000;
-        const career = pick(careersCollege);
-        p.career = career.name;
-        p.salary = career.salary;
-        p.cash += 20000;
-        state.log.push(`${p.name} chose College and became a ${career.name}.`);
-      } else {
-        const career = pick(careersFast);
-        p.career = career.name;
-        p.salary = career.salary;
-        state.log.push(`${p.name} chose Career and became a ${career.name}.`);
-      }
-      p.pathChosen = true;
-    } else if (p.pos >= boardPath.length - 1) {
-      p.retired = true;
-      p.cash += 100000;
-      state.log.push(`${p.name} retired.`);
-    } else {
-      const spin = 1 + Math.floor(Math.random() * 6);
-      state.spin = spin;
-      p.pos = Math.min(boardPath.length - 1, p.pos + spin);
-      p.movedThisTurn = true;
-      state.log.push(`${p.name} spun ${spin} and moved to ${p.pos}.`);
-      resolveTile(p, boardPath[p.pos]);
-      if (!p.house && Math.random() > .7) {
-        p.house = houses[0];
-        p.cash -= houses[0].cost;
-        state.log.push(`${p.name} bought ${houses[0].name}.`);
-      }
-    }
-    checkEnd();
-    await changed();
-    if (state.status !== "ended") endTurn(true);
-  }, 800);
-}
-
-function checkEnd() {
-  if (state.players.every(p => p.retired)) {
-    state.status = "ended";
-    const winner = [...state.players].sort((a,b) => netWorth(b) - netWorth(a))[0];
-    state.winnerId = winner.id;
-    state.log.push(`${winner.name} wins with ${money(netWorth(winner))}!`);
-    msg("Game Over", `${winner.name} wins with ${money(netWorth(winner))}!`);
-  }
-}
-
-function netWorth(p) {
-  const houseValue = p.house?.value || 0;
-  const familyBonus = (p.married ? 50000 : 0) + p.kids * 30000;
-  return p.cash + houseValue + familyBonus + p.bonus - p.loans;
-}
-
-async function choose(title, options) {
-  return new Promise(resolve => {
-    $("dialogTitle").textContent = title;
-    $("dialogBody").innerHTML = `<div class="dialog-grid"><label>Choose<select id="choicePick">${options.map(o => `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join("")}</select></label></div>`;
-    $("choiceDialog").showModal();
-    const h = () => {
-      $("choiceDialog").removeEventListener("close", h);
-      if ($("choiceDialog").returnValue !== "submit") return resolve(null);
-      resolve($("choicePick").value);
-    };
-    $("choiceDialog").addEventListener("close", h);
+  path.forEach((t,i)=>{
+    const tile=document.createElement("div"); tile.className=`tile ${t.type} ${i===cur()?.pos?"current":""}`; tile.style.left=t.x+"px"; tile.style.top=t.y+"px"; tile.innerHTML=`<strong>${i}</strong><br>${escapeHtml(t.label)}`;
+    const here=state.players.filter(p=>p.pos===i);
+    if(here.length){const h=document.createElement("div");h.className="tokens";here.forEach(p=>{const tok=document.createElement("span");tok.className="token";tok.style.background=p.color;tok.textContent=p.name[0];tok.title=p.name;tok.style.opacity=p.retired?.5:1;h.appendChild(tok)});tile.appendChild(h)}
+    board.appendChild(tile);
   });
 }
 
-async function changed() {
-  if (mode === "online") await saveState();
-  renderAll();
+async function choosePath(){
+  const p=cur();
+  const choice=await choose("Choose Your Path",[
+    {value:"college",label:"Go to College: borrow $100,000, then draw a high-paying career"},
+    {value:"career",label:"Start Career: no college loan, start earning now"}
+  ]);
+  if(!choice)return;
+  if(choice==="college"){p.loans+=100000;p.cash+=40000;drawCareerFor(p,true);state.log.push(`${p.name} chose College, borrowed $100,000, and drew ${p.career}.`);}
+  else{drawCareerFor(p,false);state.log.push(`${p.name} chose Career and drew ${p.career}.`);}
+  p.pathChosen=true; await changed();
 }
 
-async function saveState() {
-  const { error } = await supabase.from("life_games").update({ state, updated_at: new Date().toISOString() }).eq("code", gameCode);
-  if (error) msg("Save Error", error.message);
+async function drawCareer(){
+  const p=cur(); const college=p.loans>0; drawCareerFor(p,college); state.log.push(`${p.name} drew a new career: ${p.career}.`); await changed();
+}
+function drawCareerFor(p,college){const c=pick(college?collegeCareers:careerCareers);p.career=c.name;p.salary=c.salary;p.tax=c.tax;}
+
+async function spin(){
+  const p=cur(); const spin=1+Math.floor(Math.random()*10); state.spin=spin; $("spinner").style.transform=`rotate(${spin*72+Math.random()*40}deg)`;
+  const old=p.pos; p.pos=Math.min(path.length-1,p.pos+spin); p.moved=true; state.log.push(`${p.name} spun ${spin} and moved from ${old} to ${p.pos}.`);
+  resolveTile(p,path[p.pos]); checkEnd(); await changed();
 }
 
-function subscribe(code) {
-  stopSync();
-  channel = supabase.channel(`life-${code}`)
-    .on("postgres_changes", { event: "UPDATE", schema: "public", table: "life_games", filter: `code=eq.${code}` }, payload => receiveState(payload.new.state))
-    .subscribe();
-  pollTimer = setInterval(fetchLatest, 1500);
-  fetchLatest();
+function resolveTile(p,t){
+  if(t.type==="payday"){p.cash+=p.salary;state.log.push(`PAYDAY! ${p.name} collected ${money(p.salary)}.`)}
+  if(t.type==="tax"){p.cash-=p.tax;state.log.push(`${p.name} paid taxes: ${money(p.tax)}.`)}
+  if(t.type==="career"){p.salary+=20000;p.cash+=30000;state.log.push(`${p.name} got a career upgrade: +$20,000 salary and $30,000 bonus.`)}
+  if(t.type==="action"){const a=pick(actionCards);p.cash+=a.cash||0;p.lifeTiles+=a.life||0;p.salary+=a.raise||0;state.log.push(`${p.name}: ${a.text}`)}
+  if(t.type==="life"){p.lifeTiles+=1;p.cash+=20000;state.log.push(`${p.name} collected a Life Tile and $20,000.`)}
+  if(t.type==="family"){
+    if(!p.married){p.married=true;p.cash-=25000;p.lifeTiles+=1;state.log.push(`${p.name} got married! Pay $25,000 and collect a Life Tile.`)}
+    else{const k=Math.random()<.75?1:2;p.kids+=k;p.cash-=k*15000;p.lifeTiles+=k;state.log.push(`${p.name} welcomed ${k} kid${k===1?"":"s"}! Pay ${money(k*15000)} and collect ${k} Life Tile${k===1?"":"s"}.`)}
+  }
+  if(t.label==="ADOPT PET"){p.pets+=1;p.lifeTiles+=1;state.log.push(`${p.name} adopted a pet and collected a Life Tile.`)}
+  if(t.type==="house"){state.log.push(`${p.name} landed on a House space. They may buy or upgrade.`)}
+  if(t.type==="retire"){state.log.push(`${p.name} reached retirement. Click Retire when ready.`)}
 }
 
-async function fetchLatest() {
-  if (!gameCode) return;
-  const { data } = await supabase.from("life_games").select("state").eq("code", gameCode).single();
-  if (data?.state) receiveState(data.state);
+async function buyHouse(){
+  const p=cur(); const current=p.house?houses.findIndex(h=>h.name===p.house.name):-1; const options=houses.slice(current+1);
+  if(!options.length)return msg("No upgrade","You already have the best house.");
+  const c=await choose("Choose a House",options.map((h,i)=>({value:String(i),label:`${h.name}: cost ${money(h.price)}, sell ${money(h.sell)}`})));
+  if(c===null)return; const h=options[Number(c)]; p.cash-=h.price;p.house=h;state.log.push(`${p.name} bought ${h.name} for ${money(h.price)}.`); await changed();
+}
+async function sellHouse(){const p=cur(); if(!p.house)return; p.cash+=p.house.sell; state.log.push(`${p.name} sold ${p.house.name} for ${money(p.house.sell)}.`); p.house=null; await changed();}
+async function repayLoan(){const p=cur(); const amt=Math.min(20000,p.loans); p.loans-=amt; p.cash-=amt; state.log.push(`${p.name} repaid ${money(amt)} in loans.`); await changed();}
+async function retire(){const p=cur(); p.retired=true; if(p.house){p.cash+=p.house.sell;state.log.push(`${p.name} sold ${p.house.name} for ${money(p.house.sell)} at retirement.`);p.house=null} p.cash+=p.lifeTiles*50000; state.log.push(`${p.name} retired and cashed Life Tiles for ${money(p.lifeTiles*50000)}.`); checkEnd(); await changed(); if(state.status!=="ended") endTurn(true);}
+
+async function endTurn(force=false){
+  if(!force&&!isMyTurn())return; cur().moved=false; state.spin=0;
+  if(state.players.every(p=>p.retired)){checkEnd();await changed();return}
+  do{state.current=(state.current+1)%state.players.length}while(cur().retired);
+  state.log.push(`It is now ${cur().name}'s turn.`); await changed(); setTimeout(botTurn,600);
 }
 
-function receiveState(next) {
-  const wasLobby = state.status === "lobby";
-  state = next;
-  if (state.status === "playing" && wasLobby) enterGame();
-  else renderAll();
+async function botTurn(){
+  if(mode!=="solo"||cur()?.kind!=="bot"||state.status!=="playing")return;
+  setTimeout(async()=>{const p=cur(); if(!p.pathChosen){const college=Math.random()>.5; if(college){p.loans+=100000;p.cash+=40000;drawCareerFor(p,true);state.log.push(`${p.name} chose College and became ${p.career}.`)}else{drawCareerFor(p,false);state.log.push(`${p.name} started a Career as ${p.career}.`)}p.pathChosen=true}
+  else if(p.pos>=path.length-1){p.retired=true;if(p.house){p.cash+=p.house.sell;p.house=null}p.cash+=p.lifeTiles*50000;state.log.push(`${p.name} retired.`)}
+  else{const spin=1+Math.floor(Math.random()*10);state.spin=spin;p.pos=Math.min(path.length-1,p.pos+spin);p.moved=true;state.log.push(`${p.name} spun ${spin} and moved to ${p.pos}.`);resolveTile(p,path[p.pos]); if(!p.house&&Math.random()>.72){p.house=houses[0];p.cash-=houses[0].price;state.log.push(`${p.name} bought ${houses[0].name}.`)}} checkEnd(); await changed(); if(state.status!=="ended")endTurn(true);},900);
 }
 
-function stopSync() {
-  if (channel) supabase.removeChannel(channel);
-  if (pollTimer) clearInterval(pollTimer);
-  channel = null;
-  pollTimer = null;
-}
+function checkEnd(){if(state.players.every(p=>p.retired)){state.status="ended";const w=[...state.players].sort((a,b)=>netWorth(b)-netWorth(a))[0];state.winnerId=w.id;state.log.push(`${w.name} wins with ${money(netWorth(w))}!`);msg("Game Over",`${w.name} wins with ${money(netWorth(w))}!`)}}
+function netWorth(p){return p.cash+(p.house?.sell||0)+(p.married?50000:0)+p.kids*30000+p.pets*15000+p.lifeTiles*50000-p.loans}
 
-function cur() { return state.players[state.current]; }
-function viewer() { return mode === "online" ? state.players.find(p => p.id === myId) : mode === "local" ? cur() : state.players.find(p => p.id === myId) || state.players[0]; }
-function isMyTurn() { return state.status === "playing" && (mode === "local" || cur()?.id === myId); }
-function makeCode() { const a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; return Array.from({ length: 6 }, () => a[Math.floor(Math.random() * a.length)]).join(""); }
-function makeId() { return "p_" + Math.random().toString(36).slice(2, 10); }
-function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-function money(n) { return "$" + Math.round(n).toLocaleString(); }
-function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[c])); }
-function msg(title, text) { $("msgTitle").textContent = title; $("msgText").textContent = text; $("msgDialog").showModal(); }
+async function choose(title,options){return new Promise(resolve=>{$("dialogTitle").textContent=title;$("dialogBody").innerHTML=`<div class="dialog-grid"><label>Choose<select id="choicePick">${options.map(o=>`<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join("")}</select></label></div>`;$("choiceDialog").showModal();const h=()=>{$("choiceDialog").removeEventListener("close",h);if($("choiceDialog").returnValue!=="submit")return resolve(null);resolve($("choicePick").value)};$("choiceDialog").addEventListener("close",h)})}
+async function changed(){if(mode==="online")await saveState();renderAll()}
+async function saveState(){const{error}=await supabase.from("life_games").update({state,updated_at:new Date().toISOString()}).eq("code",gameCode);if(error)msg("Save Error",error.message)}
+function subscribe(code){stopSync();channel=supabase.channel(`life-${code}`).on("postgres_changes",{event:"UPDATE",schema:"public",table:"life_games",filter:`code=eq.${code}`},p=>receiveState(p.new.state)).subscribe();pollTimer=setInterval(fetchLatest,1500);fetchLatest()}
+async function fetchLatest(){if(!gameCode)return;const{data}=await supabase.from("life_games").select("state").eq("code",gameCode).single();if(data?.state)receiveState(data.state)}
+function receiveState(next){const was=state.status==="lobby";state=next;if(state.status==="playing"&&was)enterGame();else renderAll()}
+function stopSync(){if(channel)supabase.removeChannel(channel);if(pollTimer)clearInterval(pollTimer);channel=null;pollTimer=null}
+function cur(){return state.players[state.current]} function viewer(){return mode==="online"?state.players.find(p=>p.id===myId):mode==="local"?cur():state.players.find(p=>p.id===myId)||state.players[0]} function isMyTurn(){return state.status==="playing"&&(mode==="local"||cur()?.id===myId)}
+function makeCode(){const a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";return Array.from({length:6},()=>a[Math.floor(Math.random()*a.length)]).join("")} function makeId(){return"p_"+Math.random().toString(36).slice(2,10)} function pick(a){return a[Math.floor(Math.random()*a.length)]} function money(n){return "$"+Math.round(n).toLocaleString()} function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))} function msg(t,x){$("msgTitle").textContent=t;$("msgText").textContent=x;$("msgDialog").showModal()}
