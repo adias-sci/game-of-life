@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="moneyBurst" class="money-burst hidden"></div>
+
   <main class="app">
     <header class="hero">
       <div>
@@ -68,8 +70,9 @@
         <h2>Dashboard</h2>
 
         <div class="spinner-card">
-          <div class="spinner" id="spinner">
-            <span id="spinnerValue">?</span>
+          <div class="spinner-wrap">
+            <div class="needle"></div>
+            <div class="spinner" id="spinner"><span id="spinnerValue">?</span></div>
           </div>
           <button id="spinBtn" class="primary">Spin</button>
         </div>
@@ -84,7 +87,7 @@
         <div class="actions">
           <button id="choosePathBtn">Choose College/Career</button>
           <button id="drawCareerBtn">Draw Career Card</button>
-          <button id="buyHouseBtn">Buy House</button>
+          <button id="buyHouseBtn">House Shop</button>
           <button id="sellHouseBtn">Sell House</button>
           <button id="repayLoanBtn">Repay $20k Loan</button>
           <button id="retireBtn" class="danger">Retire</button>
@@ -93,16 +96,13 @@
 
         <h3>Your Life</h3>
         <div id="myStats" class="stats"></div>
-
-        <h3>Players</h3>
-        <div id="scoreboard" class="scoreboard"></div>
       </aside>
 
       <section>
         <div class="panel board-top">
           <div>
             <h2>Life Road</h2>
-            <p class="hint">Follow the bright road. Special spaces trigger careers, payday, family, houses, action cards, taxes, and retirement.</p>
+            <p class="hint">Spin, move, and watch event panels open for payday, action cards, family, career, house, taxes, and retirement.</p>
           </div>
           <span id="turnBadge" class="pill">Waiting</span>
         </div>
@@ -118,7 +118,7 @@
       </section>
 
       <aside class="panel cards-panel">
-        <h2>Current Cards</h2>
+        <h2>Player Panels</h2>
         <div id="careerCard" class="big-card career-card">
           <p class="label">Career</p>
           <h3>No career yet</h3>
@@ -127,10 +127,8 @@
           <p class="label">House</p>
           <h3>No house yet</h3>
         </div>
-        <div class="rule-card">
-          <h3>How scoring works</h3>
-          <p>Final score = cash + house sell value + family bonus + life tiles − loans.</p>
-        </div>
+        <h3>Leaderboard</h3>
+        <div id="scoreboard" class="scoreboard"></div>
       </aside>
     </section>
 
@@ -142,6 +140,17 @@
           <button value="cancel" class="ghost">Cancel</button>
           <button value="submit" class="primary">Submit</button>
         </menu>
+      </form>
+    </dialog>
+
+    <dialog id="eventDialog">
+      <form method="dialog" class="event-form">
+        <div id="eventIcon" class="event-icon">🎴</div>
+        <p id="eventKicker" class="label">Event</p>
+        <h2 id="eventTitle">Event</h2>
+        <p id="eventText"></p>
+        <div id="eventDetails" class="event-details"></div>
+        <button value="ok" class="primary">Continue</button>
       </form>
     </dialog>
 
