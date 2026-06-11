@@ -1,169 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Colorful Life Adventure</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Life Deluxe V3</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="moneyBurst" class="money-burst hidden"></div>
+<main class="app">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Deluxe digital board game</p>
+      <h1>Life Deluxe</h1>
+      <p class="subtitle">Spin, move, draw cards, build a family, buy homes, collect Life Tiles, and retire rich.</p>
+    </div>
+    <button id="resetBtn" class="ghost">Reset</button>
+  </header>
 
-  <main class="app">
-    <header class="hero">
-      <div>
-        <p class="eyebrow">Colorful life-board-game style</p>
-        <h1>Colorful Life Adventure</h1>
-        <p class="subtitle">Spin, choose college or career, get paid, buy houses, grow your family, and retire rich.</p>
+  <section id="homeScreen" class="screen panel">
+    <h2>Choose Mode</h2>
+    <div class="modeGrid">
+      <button id="soloBtn" class="mode career"><strong>Single Player</strong><span>Play against bots</span></button>
+      <button id="localBtn" class="mode family"><strong>Pass-and-Play</strong><span>Same screen multiplayer</span></button>
+      <button id="hostBtn" class="mode house"><strong>Host Online</strong><span>Create game code</span></button>
+      <button id="joinBtn" class="mode action"><strong>Join Online</strong><span>Enter game code</span></button>
+    </div>
+    <p class="hint">Online mode uses Supabase. Run <code>life-v3-supabase-setup.sql</code> one time.</p>
+  </section>
+
+  <section id="lobbyScreen" class="screen panel hidden">
+    <button id="backBtn" class="ghost small">← Back</button>
+    <h2 id="lobbyTitle">Lobby</h2>
+    <p id="lobbyHelp" class="hint"></p>
+    <div id="codeBox" class="gameCode hidden">
+      <span>Game Code</span><strong id="codeText">------</strong><button id="copyBtn" class="small">Copy</button>
+    </div>
+    <input id="joinCode" class="hidden" maxlength="6" placeholder="Enter game code" />
+    <div class="joinRow">
+      <input id="playerName" maxlength="18" placeholder="Player name" />
+      <button id="lobbyAction" class="primary">Continue</button>
+    </div>
+    <div id="playersList" class="chips"></div>
+    <button id="startBtn" class="primary hidden">Start Game</button>
+    <p id="statusText" class="hint"></p>
+  </section>
+
+  <section id="gameScreen" class="game hidden">
+    <aside class="panel left">
+      <h2>Players</h2>
+      <div id="playerPanels" class="playerPanels"></div>
+    </aside>
+
+    <section class="center">
+      <div class="panel boardHeader">
+        <div>
+          <h2>Life Road</h2>
+          <p class="hint">Current turn: <strong id="turnName">—</strong></p>
+        </div>
+        <span id="turnBadge" class="pill">Waiting</span>
       </div>
-      <button id="resetBtn" class="ghost">Reset</button>
-    </header>
 
-    <section id="homeScreen" class="panel setup">
-      <h2>Pick a Game Mode</h2>
-      <div class="mode-grid">
-        <button id="soloBtn" class="mode-card career-card">
-          <strong>Single Player</strong>
-          <span>You vs computer players.</span>
-        </button>
-        <button id="localBtn" class="mode-card family-card">
-          <strong>Pass-and-Play</strong>
-          <span>Everyone plays on one screen.</span>
-        </button>
-        <button id="hostBtn" class="mode-card house-card">
-          <strong>Host Online</strong>
-          <span>Create a game code.</span>
-        </button>
-        <button id="joinBtn" class="mode-card action-card">
-          <strong>Join Online</strong>
-          <span>Enter a game code.</span>
-        </button>
-      </div>
-      <p class="hint">Online mode uses Supabase. Run the included SQL file once before playing online.</p>
-    </section>
-
-    <section id="lobbyScreen" class="panel setup hidden">
-      <button id="backBtn" class="ghost small">← Back</button>
-      <h2 id="lobbyTitle">Lobby</h2>
-      <p id="lobbyHelp" class="hint"></p>
-
-      <div id="codeBox" class="game-code hidden">
-        <span>Game Code</span>
-        <strong id="codeText">------</strong>
-        <button id="copyBtn" class="small">Copy Code</button>
+      <div class="boardShell">
+        <div id="board" class="board"></div>
+        <div class="retirementIsland">
+          <h3>🏝 Retirement Island</h3>
+          <div id="retiredTokens" class="retiredTokens"></div>
+        </div>
       </div>
 
-      <input id="joinCode" class="hidden" placeholder="Enter game code" maxlength="6" />
-
-      <div class="player-entry">
-        <input id="playerName" placeholder="Player name" maxlength="18" />
-        <button id="lobbyAction" class="primary">Continue</button>
-      </div>
-
-      <div id="playersList" class="chips"></div>
-      <button id="startBtn" class="primary hidden">Start Game</button>
-      <p id="statusText" class="hint"></p>
-    </section>
-
-    <section id="gameScreen" class="game hidden">
-      <aside class="panel sidebar">
-        <h2>Dashboard</h2>
-
-        <div class="spinner-card">
-          <div class="spinner-wrap">
+      <div class="panel actionCenter">
+        <div class="spinnerWrap">
+          <div id="spinner" class="spinner">
             <div class="needle"></div>
-            <div class="spinner" id="spinner"><span id="spinnerValue">?</span></div>
+            <span id="spinnerValue">?</span>
           </div>
-          <button id="spinBtn" class="primary">Spin</button>
+          <button id="spinBtn" class="primary huge">SPIN</button>
         </div>
-
-        <div class="turn-card">
-          <p class="label">Current Turn</p>
-          <h3 id="turnName">—</h3>
-          <p id="youName">You: —</p>
-          <p id="phaseText">Phase: —</p>
-        </div>
-
-        <div class="actions">
-          <button id="choosePathBtn">Choose College/Career</button>
-          <button id="drawCareerBtn">Draw Career Card</button>
-          <button id="buyHouseBtn">House Shop</button>
-          <button id="sellHouseBtn">Sell House</button>
-          <button id="repayLoanBtn">Repay $20k Loan</button>
-          <button id="retireBtn" class="danger">Retire</button>
-          <button id="endTurnBtn" class="ghost">End Turn</button>
-        </div>
-
-        <h3>Your Life</h3>
-        <div id="myStats" class="stats"></div>
-      </aside>
-
-      <section>
-        <div class="panel board-top">
-          <div>
-            <h2>Life Road</h2>
-            <p class="hint">Spin, move, and watch event panels open for payday, action cards, family, career, house, taxes, and retirement.</p>
+        <div class="turnActions">
+          <h2 id="actionTitle">Action Center</h2>
+          <p id="actionText">Choose a mode to begin.</p>
+          <div class="buttonGrid">
+            <button id="pathBtn">Choose College/Career</button>
+            <button id="careerBtn">Career Deck</button>
+            <button id="cardBtn">Draw Action Card</button>
+            <button id="houseBtn">House Showroom</button>
+            <button id="sellBtn">Sell House</button>
+            <button id="loanBtn">Repay Loan</button>
+            <button id="retireBtn" class="danger">Retire</button>
+            <button id="endBtn" class="ghost">End Turn</button>
           </div>
-          <span id="turnBadge" class="pill">Waiting</span>
         </div>
+      </div>
 
-        <div class="board-wrap">
-          <div id="board" class="board"></div>
-        </div>
-
-        <div class="panel log-panel">
-          <h3>Life Story Log</h3>
-          <div id="log" class="log"></div>
-        </div>
-      </section>
-
-      <aside class="panel cards-panel">
-        <h2>Player Panels</h2>
-        <div id="careerCard" class="big-card career-card">
-          <p class="label">Career</p>
-          <h3>No career yet</h3>
-        </div>
-        <div id="houseCard" class="big-card house-card">
-          <p class="label">House</p>
-          <h3>No house yet</h3>
-        </div>
-        <h3>Leaderboard</h3>
-        <div id="scoreboard" class="scoreboard"></div>
-      </aside>
+      <div class="panel logPanel">
+        <h3>Life Story</h3>
+        <div id="log" class="log"></div>
+      </div>
     </section>
 
-    <dialog id="choiceDialog">
-      <form method="dialog" class="dialog-form">
-        <h2 id="dialogTitle">Choose</h2>
-        <div id="dialogBody"></div>
-        <menu>
-          <button value="cancel" class="ghost">Cancel</button>
-          <button value="submit" class="primary">Submit</button>
-        </menu>
-      </form>
-    </dialog>
+    <aside class="panel right">
+      <h2>Cards & Gallery</h2>
+      <div id="activeCard" class="flipCard">
+        <div class="cardInner">
+          <div class="cardFace cardFront"><p class="label">Current Card</p><h3>No card drawn</h3></div>
+          <div class="cardFace cardBack"><h3>Life Deluxe</h3></div>
+        </div>
+      </div>
+      <div class="miniDecks">
+        <button id="openProfileBtn" class="career">Profile</button>
+        <button id="openLifeTilesBtn" class="life">Life Tiles</button>
+        <button id="openResultsBtn" class="retire">Results</button>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </aside>
+  </section>
 
-    <dialog id="eventDialog">
-      <form method="dialog" class="event-form">
-        <div id="eventIcon" class="event-icon">🎴</div>
-        <p id="eventKicker" class="label">Event</p>
-        <h2 id="eventTitle">Event</h2>
-        <p id="eventText"></p>
-        <div id="eventDetails" class="event-details"></div>
-        <button value="ok" class="primary">Continue</button>
-      </form>
-    </dialog>
+  <dialog id="modal">
+    <form method="dialog" class="modalForm">
+      <h2 id="modalTitle">Choose</h2>
+      <div id="modalBody"></div>
+      <menu><button value="cancel" class="ghost">Cancel</button><button value="submit" class="primary">Submit</button></menu>
+    </form>
+  </dialog>
 
-    <dialog id="msgDialog">
-      <form method="dialog" class="dialog-form">
-        <h2 id="msgTitle">Message</h2>
-        <p id="msgText"></p>
-        <button value="ok" class="primary">Close</button>
-      </form>
-    </dialog>
-  </main>
-
-  <script src="supabase-config.js"></script>
-  <script type="module" src="script.js"></script>
+  <div id="toastLayer" class="toastLayer"></div>
+</main>
+<script src="supabase-config.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
