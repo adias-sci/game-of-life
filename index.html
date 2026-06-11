@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Life Deluxe V4</title>
+  <title>Life Quest V5 Hybrid</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <main class="app">
   <section id="homeScreen" class="home panel">
-    <p class="eyebrow">No-scroll deluxe board game layout</p>
-    <h1>Life Deluxe V4</h1>
-    <p class="subtitle">A colorful Life-style board game with fixed side panels, floating spinner, card tabs, and online room codes.</p>
+    <p class="eyebrow">Hybrid life-board-game adventure</p>
+    <h1>Life Quest V5</h1>
+    <p class="subtitle">A guided, colorful Life-style game with branching paths, STOP spaces, decks, cars, family growth, pets, risky routes, and retirement scoring.</p>
     <div class="modeGrid">
       <button id="soloBtn" class="mode career"><strong>Single Player</strong><span>Play against bots</span></button>
       <button id="localBtn" class="mode family"><strong>Pass-and-Play</strong><span>Same screen multiplayer</span></button>
       <button id="hostBtn" class="mode house"><strong>Host Online</strong><span>Create game code</span></button>
       <button id="joinBtn" class="mode action"><strong>Join Online</strong><span>Enter game code</span></button>
     </div>
-    <p class="hint">For online mode, run <code>life-v4-supabase-setup.sql</code> in Supabase first.</p>
+    <p class="hint">Online mode uses Supabase. Run <code>life-v5-supabase-setup.sql</code> one time.</p>
   </section>
 
   <section id="lobbyScreen" class="home panel hidden">
@@ -49,16 +49,13 @@
         </div>
         <button id="resetBtn" class="ghost small">Reset</button>
       </div>
-
       <div id="activePlayerCard" class="activePlayer"></div>
-
       <div class="miniPlayers">
-        <h3>All Players</h3>
+        <h3>Players</h3>
         <div id="playerStrip" class="playerStrip"></div>
       </div>
-
       <div class="eventFeed">
-        <h3>Event Feed</h3>
+        <h3>Last Events</h3>
         <div id="eventFeed"></div>
       </div>
     </aside>
@@ -66,7 +63,7 @@
     <section class="boardArea">
       <div class="boardTop">
         <div>
-          <h1>Life Road</h1>
+          <h1>Life Quest Road</h1>
           <p id="turnLine" class="hint">Waiting...</p>
         </div>
         <span id="turnBadge" class="pill">Waiting</span>
@@ -74,29 +71,22 @@
 
       <div class="boardStage">
         <div id="board" class="board"></div>
-
         <div class="floatingSpinner">
-          <div id="spinner" class="spinner">
-            <div class="needle"></div>
-            <span id="spinnerValue">?</span>
-          </div>
+          <div id="spinner" class="spinner"><div class="needle"></div><span id="spinnerValue">?</span></div>
         </div>
-
         <div class="retirementIsland">
           <strong>🏝 Retirement</strong>
           <div id="retiredTokens"></div>
         </div>
       </div>
 
-      <div class="bottomBar">
-        <button id="spinBtn" class="primary">SPIN</button>
-        <button id="pathBtn">PATH</button>
-        <button id="careerBtn">CAREER</button>
-        <button id="actionBtn">ACTION CARD</button>
-        <button id="houseBtn">HOUSE</button>
-        <button id="loanBtn">PAY LOAN</button>
-        <button id="retireBtn" class="danger">RETIRE</button>
-        <button id="endBtn" class="ghost">END TURN</button>
+      <div class="director panel">
+        <div>
+          <p class="eyebrow">Game Director</p>
+          <h2 id="directorTitle">Start</h2>
+          <p id="directorText">The game will guide each player step by step.</p>
+        </div>
+        <button id="mainActionBtn" class="primary mainAction">Start</button>
       </div>
     </section>
 
@@ -104,28 +94,20 @@
       <div class="panelHeader">
         <div>
           <p class="eyebrow">Cards</p>
-          <h2>Deck Panel</h2>
+          <h2>Decks</h2>
         </div>
       </div>
-
       <div class="tabs">
         <button class="tab active" data-tab="career">Career</button>
-        <button class="tab" data-tab="house">House</button>
+        <button class="tab" data-tab="home">Home</button>
         <button class="tab" data-tab="life">Life</button>
         <button class="tab" data-tab="results">Results</button>
       </div>
-
       <div id="tabContent" class="tabContent"></div>
-
       <div id="activeCard" class="flipCard">
         <div class="cardInner">
-          <div class="cardFace cardFront">
-            <p class="label">Current Card</p>
-            <h3>No card yet</h3>
-          </div>
-          <div class="cardFace cardBack">
-            <h3>Life Deluxe</h3>
-          </div>
+          <div class="cardFace cardFront"><p class="label">Current Card</p><h3>No card yet</h3></div>
+          <div class="cardFace cardBack"><h3>Life Quest</h3></div>
         </div>
       </div>
     </aside>
@@ -141,7 +123,6 @@
       </menu>
     </form>
   </dialog>
-
   <div id="toastLayer"></div>
 </main>
 <script src="supabase-config.js"></script>

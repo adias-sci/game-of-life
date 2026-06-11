@@ -1,26 +1,42 @@
-# Life Deluxe V4 No-Scroll Layout
+# Life Quest V5 Hybrid
 
-This version redesigns the game so desktop players do not need to scroll.
+This is an original hybrid Life-style game inspired by the structure of classic and newer life-road board games.
 
-## Layout
+## Included
 
-- Left fixed side panel: active player, all players, event feed
-- Center: large board, floating spinner, retirement island
-- Bottom fixed action bar
-- Right fixed side panel: tabbed card info and current card
-- Mobile fallback stacks sections because phone screens are too small for no-scroll play
+- Guided Game Director: only one main action at a time
+- Branching paths
+- STOP spaces:
+  - Path choice
+  - Graduation/job milestone
+  - Marriage
+  - Family path choice
+  - Risky/safe route choice
+  - Retirement
+- Spinner-driven movement
+- Family car growth: marriage, babies, pets
+- Card decks:
+  - Career cards
+  - Home cards
+  - Action cards
+  - Pet cards
+  - Life Tiles
+- Retirement scoring
+- Single-player bots
+- Pass-and-play
+- Supabase online room codes
 
 ## Online setup
 
 1. Supabase → SQL Editor
-2. Paste `life-v4-supabase-setup.sql`
-3. Run it once
-4. Upload these files to GitHub
+2. Paste `life-v5-supabase-setup.sql`
+3. Run
+4. Upload files to GitHub
 5. Deploy on Vercel
 6. Share the Vercel URL
 
 ## Google Sites
 
-Google Sites → Insert → Embed → By URL → paste your Vercel URL.
+Insert → Embed → By URL → paste your Vercel URL.
 
-This is an original Life-style game, not an official licensed product.
+This is an original game and does not copy the exact commercial board, artwork, cards, or written text.
